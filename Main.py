@@ -19,6 +19,7 @@ from itertools import cycle
 from colorama import Fore
 from sys import platform
 from PIL import Image
+import os
 import pyPrivnote as pn
 from gtts import gTTS
 
@@ -27,7 +28,7 @@ ctypes.windll.kernel32.SetConsoleTitleW(f'[Alucard Selfbot v{SELFBOT.__version__
 with open('config.json') as f:
     config = json.load(f)
 
-token = config.get('token')
+token = os.environ.get("token")
 password = config.get('password')
 prefix = config.get('prefix')
 
@@ -157,11 +158,11 @@ def Clear():
 Clear()
 
 def Init():
-    if config.get('token') == "token-here":
+    if os.environ.get('token') == "token-here":
         Clear()
         print(f"{Fore.RED}[ERROR] {Fore.YELLOW}You didnt put your token in the config.json file"+Fore.RESET)
     else:
-        token = config.get('token')
+        token = os.environ.get('token')
         try:
             Alucard.run(token, bot=False, reconnect=True)
             os.system(f'title (Alucard Selfbot) - Version {SELFBOT.__version__}')
